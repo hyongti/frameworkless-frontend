@@ -1,5 +1,5 @@
 import getTodos from "./getTodos.js";
-import view from "./view.js";
+import view from "./view/app.js";
 
 const state = {
   todos: getTodos(),
