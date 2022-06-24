@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "http-server -p 3000 -c-1",
     "test": "jest"
   },
   "repository": {
@@ -22,5 +23,8 @@
     "babel-jest": "^28.1.1",
     "jest": "^28.1.1",
     "jest-environment-jsdom": "^28.1.1"
+  },
+  "dependencies": {
+    "http-server": "^14.1.1"
   }
 }
