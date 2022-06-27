@@ -2,8 +2,8 @@
 const registry = {};
 
 const renderWrapper = (component) => {
-  return (targetElement, state) => {
-    const element = component(targetElement, state);
+  return (targetElement, state, events) => {
+    const element = component(targetElement, state, events);
     // data-component 속성을 가진 모든 DOM 요소를 찾음
     const childComponents = element.querySelectorAll("[data-component]");
 
@@ -16,7 +16,7 @@ const renderWrapper = (component) => {
         return;
       }
 
-      target.replaceWith(child(target, state));
+      target.replaceWith(child(target, state, events));
     });
 
     return element;
@@ -27,12 +27,12 @@ const add = (name, component) => {
   registry[name] = renderWrapper(component);
 };
 
-const renderRoot = (root, state) => {
+const renderRoot = (root, state, events) => {
   const cloneComponent = (root) => {
     return root.cloneNode(true);
   };
 
-  return renderWrapper(cloneComponent)(root, state);
+  return renderWrapper(cloneComponent)(root, state, events);
 };
 
 export default { add, renderRoot };
