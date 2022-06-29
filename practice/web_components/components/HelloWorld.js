@@ -1,4 +1,13 @@
+import applyDiff from "./applyDiff.js";
+
 const DEFAULT_COLOR = "black";
+
+const createDomElement = (color) => {
+  const div = document.createElement("div");
+  div.textContent = "Hello World!";
+  div.style.color = color;
+  return div;
+};
 
 export default class HelloWorld extends HTMLElement {
   static get observedAttributes() {
@@ -13,22 +22,17 @@ export default class HelloWorld extends HTMLElement {
     this.setAttribute("color", value);
   }
 
-  attributeChangedCallback(name, _, newValue) {
-    if (!this.div) {
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (!this.hasChildNodes()) {
       return;
     }
 
-    if (name === "color") {
-      this.div.style.color = newValue;
-    }
+    applyDiff(this, this.firstElementChild, createDomElement(newValue));
   }
 
   connectedCallback() {
     window.requestAnimationFrame(() => {
-      this.div = document.createElement("div");
-      this.div.textContent = "Hello World!";
-      this.div.style.color = this.color;
-      this.appendChild(this.div);
+      this.appendChild(createDomElement(this.color));
     });
   }
 }
