@@ -1,6 +1,10 @@
 const DEFAULT_COLOR = "black";
 
 export default class HelloWorld extends HTMLElement {
+  static get observedAttributes() {
+    return ["color"];
+  }
+
   get color() {
     return this.getAttribute("color") || DEFAULT_COLOR;
   }
@@ -9,14 +13,22 @@ export default class HelloWorld extends HTMLElement {
     this.setAttribute("color", value);
   }
 
+  attributeChangedCallback(name, _, newValue) {
+    if (!this.div) {
+      return;
+    }
+
+    if (name === "color") {
+      this.div.style.color = newValue;
+    }
+  }
+
   connectedCallback() {
     window.requestAnimationFrame(() => {
-      const div = document.createElement("div");
-      div.textContent = "Hello World!";
-
-      div.style.color = this.color;
-
-      this.appendChild(div);
+      this.div = document.createElement("div");
+      this.div.textContent = "Hello World!";
+      this.div.style.color = this.color;
+      this.appendChild(this.div);
     });
   }
 }
