@@ -1,12 +1,14 @@
 import express from "express";
 import { v4 } from "uuid";
 import bodyParser from "body-parser";
+import cors from "cors";
 
 const app = express();
 const PORT = 8080;
 let todos = [];
 
 app.use(bodyParser.json());
+app.use(cors());
 
 app.get("/api/todos", (req, res) => {
   console.log("get");
