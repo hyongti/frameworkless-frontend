@@ -1,5 +1,6 @@
 // import http from "./httpXhr.js";
-import http from "./httpFetch.js";
+// import http from "./httpFetch.js";
+import http from "./httpAxios.js";
 
 const HEADERS = {
   "Content-Type": "application/json",
